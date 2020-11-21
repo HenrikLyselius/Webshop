@@ -1,0 +1,18 @@
+.gold {
+    color: gold;
+}
+
+#banner {
+    position: relative;
+}
+
+#logoTop {
+    z-index: 0;
+    vertical-align: bottom;
+}
+
+
+#logoBottom {
+    z-index: 1;
+    vertical-align: top;
+}

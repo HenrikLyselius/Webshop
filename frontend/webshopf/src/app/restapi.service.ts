@@ -11,7 +11,7 @@ export class RestapiService {
 
   jwt:string = null;
 
-  options : any = {
+  optionsLogin : any = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json'
       }),
@@ -19,10 +19,10 @@ export class RestapiService {
       responseType: 'json'
   };
 
-  options2 : any = {
+  optionsJwt : any = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json',
-      'Authorization': 'Bearer ' + this.jwt
+      'Authorization': 'Bearer '
       }),
       observe: "response",
       responseType: 'text' as 'json'
@@ -36,8 +36,7 @@ export class RestapiService {
 
     console.log(username + " " + password);
     let object = {"username": username, "password": password};
-    const headers = new HttpHeaders({})
-    return this.http.post<any>("http://localhost:8080/authenticate", object, this.options)
+    return this.http.post<any>("http://localhost:8080/authenticate", object, this.optionsLogin)
   }
 
   public jwtTest()
@@ -50,11 +49,11 @@ export class RestapiService {
         observe: "response",
         responseType: 'text' as 'json'
     }
-    return this.http.get("http://localhost:8080/admintest", options3);
+    return this.http.get("http://localhost:8080/admintest", this.optionsJwt);
   }
 
   public setJwt(jwt:string)
   {
-    this.jwt = jwt;
+    this.optionsJwt.headers.Authorization = 'Bearer ' + jwt;
   }
 }

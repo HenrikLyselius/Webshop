@@ -22,12 +22,18 @@ export class LoginComponent implements OnInit {
   doLogin()
   {
     this.restService.login(this.username, this.password).subscribe(
-      (Response) => {this.handleLoginResponse(Response)}
+      (Response) => {this.handleLoginResponse(Response)},
+      (Error) => {this.handleLoginError(Error);}
+
     );
   }
 
   handleLoginResponse(response: any)
   {
+      //console.log(response.body);
+      console.log(response.status);
+      console.log(response.body);
+
      if(response.status === 200)
      {
        console.log(response.body.jwt);
@@ -36,12 +42,22 @@ export class LoginComponent implements OnInit {
        this.restService.jwtTest().subscribe(
          (Response) => { this.jwtTest(Response);}
        )
-
-
      }
+     else if(response.status === 403)
+     {
+       console.log("Här i erroren, vanlig respons.");
+      console.log("Username or password is incorrect.");
+     }
+
+     
   }
 
-
+  handleLoginError(response: any)
+  {
+    console.log(response);
+    console.log("Här i erroren, äkta error.");
+    console.log("Username or password is incorrect.");
+  }
 
   jwtTest(response:any)
   {

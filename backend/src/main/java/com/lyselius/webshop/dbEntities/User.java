@@ -3,10 +3,9 @@ package com.lyselius.webshop.dbEntities;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class User {
@@ -18,6 +17,15 @@ public class User {
     private long userID;
     private String username;
     private String password;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Basket> baskets = new ArrayList<Basket>();
+
+    @ManyToMany
+    @JoinTable(name = "user_role",
+                joinColumns = { @JoinColumn(name = "userID") },
+                inverseJoinColumns = { @JoinColumn(name = "role") })
+    private List<Role> roles = new ArrayList<Role>();
 
 
     public User()
@@ -53,5 +61,27 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    public void addRole(Role role)
+    {
+        roles.add(role);
+    }
+
+    public List<Basket> getBaskets() {
+        return baskets;
+    }
+
+    public void setBaskets(List<Basket> baskets) {
+        this.baskets = baskets;
     }
 }

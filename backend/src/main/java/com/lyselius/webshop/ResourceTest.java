@@ -1,14 +1,17 @@
 package com.lyselius.webshop;
 
 
+import com.lyselius.webshop.dbEntities.Role;
 import com.lyselius.webshop.dbEntities.User;
 import com.lyselius.webshop.dbEntities.User_role;
+import com.lyselius.webshop.repositories.RoleRepository;
 import com.lyselius.webshop.repositories.UserRepository;
 import com.lyselius.webshop.repositories.User_roleRepository;
 import com.lyselius.webshop.services.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,6 +24,9 @@ import java.util.Optional;
 @CrossOrigin(origins = "http://localhost:4200")
 public class ResourceTest {
 
+
+    @Autowired
+    RoleRepository roleRepository;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -53,9 +59,21 @@ public class ResourceTest {
     }
 
     @GetMapping("/admintest")
-    public String admintest()
+    public ResponseEntity<?> admintest()
     {
-        return "Admintest här!!!!!!!!!!";
+        return ResponseEntity.ok(new AuthenticationResponse("Admintest här!!!!!!!!!!"));
+    }
+
+
+    @GetMapping("/mappingtest")
+    public void mappingTest()
+    {
+        Optional<User> user = userRepository.findByUsername("admin2");
+        if(user.isPresent())
+        {
+            //System.out.println(user.get().getBaskets().get(0).isActive());
+            System.out.println(user.get().getRoles().get(0).getDescription());
+        }
     }
 
 
@@ -69,10 +87,12 @@ public class ResourceTest {
         { return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(user); }
 
         // Create user and impart the role costumer
+        Role role = roleRepository.findByRole("ROLE_CUSTOMER").get();
+        user.addRole(role);
         userRepository.save(user);
         long userID = userRepository.findByUsername(user.getUsername()).get().getuserID();
-        System.out.println(userID);
-        user_roleRepository.save(new User_role(userID, "ROLE_CUSTOMER"));
+        /*System.out.println(userID);
+        user_roleRepository.save(new User_role(userID, "ROLE_CUSTOMER"));*/
 
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
