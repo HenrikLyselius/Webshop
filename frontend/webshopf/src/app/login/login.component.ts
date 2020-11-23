@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { RestapiService } from '../restapi.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ export class LoginComponent implements OnInit {
   @Input('password') password: string;
   
 
-  constructor(private restService:RestapiService) { }
+  constructor(private restService:RestapiService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -41,7 +42,10 @@ export class LoginComponent implements OnInit {
 
        this.restService.jwtTest().subscribe(
          (Response) => { this.jwtTest(Response);}
-       )
+       );
+
+        this.router.navigateByUrl('/shopping');
+
      }
      else if(response.status === 403)
      {

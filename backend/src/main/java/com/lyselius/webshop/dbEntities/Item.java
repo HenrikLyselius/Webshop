@@ -1,12 +1,12 @@
 package com.lyselius.webshop.dbEntities;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Item {
@@ -18,6 +18,10 @@ public class Item {
     String name;
     String description;
 
+
+    @JsonBackReference
+    @ManyToMany(mappedBy = "items")
+    private List<Basket> baskets = new ArrayList<>();
 
     public Item()
     {
@@ -52,5 +56,13 @@ public class Item {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Basket> getBaskets() {
+        return baskets;
+    }
+
+    public void setBaskets(List<Basket> baskets) {
+        this.baskets = baskets;
     }
 }

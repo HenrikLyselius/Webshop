@@ -1,20 +1,36 @@
 package com.lyselius.webshop.dbEntities;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Basket {
 
+
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO,generator="native")
     @GenericGenerator(name = "native",strategy = "native")
-    private long basketID ;
+    private long basketID;
+
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "userID")
     private User user;
+
+    @JsonManagedReference
+    @ManyToMany
+    @JoinTable(name = "basket_item",
+                joinColumns = { @JoinColumn(name = "basketID") },
+                inverseJoinColumns = { @JoinColumn(name = "itemID") })
+    private List<Item> items = new ArrayList<>();
+
+
     private boolean active;
 
     public Basket()
@@ -22,10 +38,18 @@ public class Basket {
 
     }
 
-    public Basket(User user, boolean active)
+    public Basket(User user)
     {
         this.user = user;
-        this.active = active;
+        this.active = true;
+    }
+
+    public Basket(Basket basket)
+    {
+        this.basketID = basket.getBasketID();
+        this.user = basket.getUser();
+        this.items = basket.getItems();
+        this.active = true;
     }
 
 
@@ -51,5 +75,18 @@ public class Basket {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
+    public void addItem(Item item)
+    {
+        items.add(item);
     }
 }

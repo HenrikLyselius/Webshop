@@ -1,1 +1,11 @@
-<p>paying works!</p>
+
+
+
+<div id="searchResults">
+    <p *ngFor="let item of basketItems">{{item.name}}
+        <button (click) = "addOneItemToBasket(item)">Add one</button>
+        <button (click) = "subtractOneItemFromBasket(item)"> Remove one </button>
+        
+    </p>
+
+</div>

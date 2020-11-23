@@ -1,1 +1,15 @@
-<p>shopping works!</p>
+<form>
+    <label for="fname">Search</label><br>
+    <input type="text" id="fname" name="fname" [(ngModel)]="search"><br>
+    <button type="button" (click) = "searchItems()">Search</button>
+</form>
+
+
+
+<div id="searchResults">
+    <p *ngFor="let item of itemList">{{item.name}}
+        <input type="text" id={{item.name}} value=1>
+        <button (click) = "addToBasket(item)">Add to basket</button>
+    </p>
+
+</div>

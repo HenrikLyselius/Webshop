@@ -8,7 +8,8 @@ import { RestapiService } from './restapi.service';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ShoppingComponent } from './shopping/shopping.component';
-import { PayingComponent } from './paying/paying.component'
+import { PayingComponent } from './paying/paying.component';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import { PayingComponent } from './paying/paying.component'
     FormsModule,
     HttpClientModule
   ],
-  providers: [RestapiService],
+  providers: [RestapiService, CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

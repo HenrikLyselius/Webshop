@@ -1,6 +1,7 @@
 package com.lyselius.webshop.dbEntities;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -18,6 +19,7 @@ public class User {
     private String username;
     private String password;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Basket> baskets = new ArrayList<Basket>();
 
