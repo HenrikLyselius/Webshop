@@ -55,15 +55,5 @@ public class BasketResource {
         basketRepository.save(basket);
     }
 
-    @GetMapping(value ="/basketitems/{basketID}")
-    public ResponseEntity<List<Item>> getBasketItems(@PathVariable long basketID)
-    {
-        Optional<Basket> basket = basketRepository.findByBasketID(basketID);
 
-        if(basket.isPresent())
-        {
-            return ResponseEntity.ok(basket.get().getItems());
-        }
-        return ResponseEntity.ok(new ArrayList<Item>());
-    }
 }

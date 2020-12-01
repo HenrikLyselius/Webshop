@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -10,19 +9,23 @@ import { HttpClientModule } from '@angular/common/http';
 import { ShoppingComponent } from './shopping/shopping.component';
 import { PayingComponent } from './paying/paying.component';
 import { CookieService } from 'ngx-cookie-service';
+import { AdminComponent } from './admin/admin.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     ShoppingComponent,
-    PayingComponent
+    PayingComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule.forRoot(),
   ],
   providers: [RestapiService, CookieService],
   bootstrap: [AppComponent]

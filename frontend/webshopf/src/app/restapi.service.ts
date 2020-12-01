@@ -36,12 +36,15 @@ export class RestapiService {
     }
   }
 
-  
-
+  public setUsername(username: string)
+  {
+    this.username = username;
+  }
 
   public login(username:string, password:string)
   {
     this.cookieService.set("username", username);
+    this.username = username;
     console.log(username + " " + password);
     let object = {"username": username, "password": password};
     return this.http.post<any>("http://localhost:8080/authenticate", object, this.optionsLogin)
@@ -66,11 +69,18 @@ export class RestapiService {
     }
   }
 
-
   public searchItems(search:string)
   {
     console.log(this.optionsJwt);
     return this.http.get("http://localhost:8080/item/" + search, this.optionsJwt);
+  }
+
+
+  public addItem(name: string, description: string)
+  {
+    
+    let obj = {};
+    return this.http.post("http://localhost:8080/item/" + name + "/" + description, obj, this.optionsJwt);
   }
 
   public getBasket()
@@ -79,20 +89,49 @@ export class RestapiService {
   }
 
 
-  public getBasketItems(basketID: number)
+  public getBasketItems(basketID: string)
   {
-    return this.http.get("http://localhost:8080/basketitems/" + basketID);
+    return this.http.get("http://localhost:8080/basketitems/" + basketID, this.optionsJwt);
   }
 
-  public addItemToBasket(itemID:number, basketID: number, change: number)
+  public addItemToBasket(itemID:number, basketID: number, change: number, name: string)
   {
     let obj = {};
-    return this.http.put("http://localhost:8080/basket/additem/" + basketID + "/" + itemID + "/" + change, obj, this.optionsJwt);
+    return this.http.put("http://localhost:8080/basket/additem/" + basketID + "/" + itemID + "/" + change + "/" + name, obj, this.optionsJwt);
   }
 
   public removeItemFromBasket(itemID:number, basketID: number, change: number)
   {
     let obj = {};
     return
+  }
+
+  public makeOrder(basketID: number)
+  {
+    let obj = {};
+    return this.http.post("http://localhost:8080/order/" + basketID, obj, this.optionsJwt);
+  }
+
+  public getOrdersNotExpediated()
+  {
+    return this.http.get("http://localhost:8080/orders/notexpediated", this.optionsJwt);
+  }
+
+  public expediateOrder(orderID: number)
+  {
+    let obj ={};
+    return this.http.put("http://localhost:8080/order/expediate/" + orderID, obj, this.optionsJwt);
+  }
+
+  public createUser(username: string, password: string)
+  {
+    let object = {"username": username, "password": password};
+    return this.http.post<any>("http://localhost:8080/user", object, this.optionsLogin);
+  }
+
+
+  public isUserAdmin()
+  {
+    return this.http.get("http://localhost:8080/isadmin/" + this.username, this.optionsJwt)
   }
 }

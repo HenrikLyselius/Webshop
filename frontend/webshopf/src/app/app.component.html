@@ -8,13 +8,28 @@
     </div>
 </div>
 
-<a routerLink="login"> Login </a>
-<a routerLink="shopping"> Shopping </a>
+
+
+
+<!-- <div *ngIf="loggedIn == false">
+    <login (loginStatus)="loginStatusChange($event)"></login>
+
+</div> -->
+
+
+<button *ngIf="loggedIn" (click)="showShoppingPage()"> Handla </button> 
+<button *ngIf="loggedIn" (click)="showPayingPage()"> Gå till kassan </button> 
+<button *ngIf="userIsAdmin" (click) = goToAdminPage()> Länk till adminsidan här!! </button>
+<button *ngIf="loggedIn" (click)="logOut()"> Logga ut </button> 
+
 
 <br>
 <br>
-
 
 <router-outlet></router-outlet>
+<br>
+<br>
+<!-- 
+<router-outlet *ngIf="loggedIn == true"></router-outlet> -->
 
 

@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { RestapiService } from '../restapi.service';
 import { Item } from '../item';
 import { Basket } from '../Basket'
+import { Router, NavigationEnd } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-shopping',
@@ -17,9 +19,24 @@ export class ShoppingComponent implements OnInit {
   
   itemList: Array<Item>;
   basket: any;
+  navigationSubscription;
 
-  constructor(private restService:RestapiService) 
+  constructor(private restService:RestapiService, private router: Router, private cookieService: CookieService) 
   {
+    this.navigationSubscription = this.router.events.subscribe((e: any) => {
+      // If it is a NavigationEnd event re-initalise the component
+      if (e instanceof NavigationEnd) {
+        this.initialiseInvites();
+      }
+    });
+    
+    
+    this.getBasket();
+  }
+
+
+  initialiseInvites() {
+    // Set default values and re-fetch any data you need.
     this.getBasket();
   }
 
@@ -27,16 +44,27 @@ export class ShoppingComponent implements OnInit {
   }
 
 
+  ngOnDestroy() {
+    // avoid memory leaks here by cleaning up after ourselves. If we  
+    // don't then we will continue to run our initialiseInvites()   
+    // method on every navigationEnd event.
+    if (this.navigationSubscription) {  
+       this.navigationSubscription.unsubscribe();
+    }
+  }
+
   searchItems()
   {
     this.restService.jwtTest().subscribe(
-      (Response) => { console.log(Response);}
+      (Response) => { console.log(Response); }
     );
 
     this.restService.searchItems(this.search).subscribe(
       (Response) => { this.handleSearchResponse(Response); },
-      (Error) => { this.handleErrorResponse(Error); }
-    )
+      (Error) => { this.handleErrorResponse(Error); 
+        console.log("Omrouting.");
+        this.router.navigateByUrl('/login');}
+    );
   }
 
 
@@ -49,11 +77,6 @@ export class ShoppingComponent implements OnInit {
 
   generateHtmlList()
   {
-    console.log(this.itemList);
-    console.log(this.itemList[0]);
-    console.log(this.itemList[0].name);
-
-
     document.getElementById('searchResults').innerHTML = '';
 
     let ul = document.createElement('ul');
@@ -89,7 +112,7 @@ export class ShoppingComponent implements OnInit {
     this.restService.getBasket().subscribe(
       (Response) => { this.handleGetBasket(Response); },
       (Error) => { this.handleErrorResponse(Error); }
-    )
+    );
   }
 
 
@@ -113,9 +136,17 @@ export class ShoppingComponent implements OnInit {
 
     console.log("I addToBasket: ItemID " + item.itemID + " basketID: " + this.basket.basketID);
 
-    this.restService.addItemToBasket(item.itemID, this.basket.basketID, change).subscribe(
+    this.restService.addItemToBasket(item.itemID, this.basket.basketID, change, item.name).subscribe(
       (Response) => { console.log(Response); },
       (Error) => { this.handleErrorResponse(Error); }
     )
   }
+
+  /* logOut()
+  {
+    this.cookieService.set("username", "x");
+    this.restService.setUsername("x");
+    this.cookieService.set("jwt", '');
+    this.router.navigateByUrl('/login');
+  } */
 }

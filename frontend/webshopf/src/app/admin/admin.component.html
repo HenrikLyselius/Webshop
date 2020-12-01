@@ -1,0 +1,32 @@
+
+<br>
+<br>
+
+<button type="button" (click) = "showOrders()">Visa icke signerade ordrar</button>
+
+<br>
+<br>
+
+<div id="searchResults">
+    <p *ngFor="let order of orderList">OrderID: {{order.orderID}}, Expedierad: {{order.expediated}}
+        <button *ngIf="order.expediated === false" (click) = "expediateOrder(order)">Markera som färdig</button>
+    </p>    
+</div>
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+<h4>Lägg till en ny vara i systemet.</h4>
+<form>
+    <label for="name">Namn</label><br>
+    <input type="text" id="name" name="name" [(ngModel)]="name"><br>
+    <label for="description">Beskrivning</label><br>
+    <input type="text" id="desription" name="description" [(ngModel)]="description"><br>
+    <button type="button" (click) = "addItem()">Lägg till vara</button>
+</form>

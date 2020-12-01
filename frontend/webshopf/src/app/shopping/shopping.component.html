@@ -1,7 +1,14 @@
+
+
+<br>
+<br>
+
 <form>
-    <label for="fname">Search</label><br>
+    <label for="fname">Sök bland alla fantastiska varor.</label>
+    <br>
+    <br>
     <input type="text" id="fname" name="fname" [(ngModel)]="search"><br>
-    <button type="button" (click) = "searchItems()">Search</button>
+    <button type="button" (click) = "searchItems()">Hitta</button>
 </form>
 
 
@@ -10,6 +17,5 @@
     <p *ngFor="let item of itemList">{{item.name}}
         <input type="text" id={{item.name}} value=1>
         <button (click) = "addToBasket(item)">Add to basket</button>
-    </p>
-
+    </p>    
 </div>

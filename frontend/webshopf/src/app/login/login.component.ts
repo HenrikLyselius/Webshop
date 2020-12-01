@@ -1,9 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { RestapiService } from '../restapi.service';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
-  selector: 'app-login',
+  selector: 'login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -13,9 +14,10 @@ export class LoginComponent implements OnInit {
 
   @Input('username') username: string;
   @Input('password') password: string;
+  @Output() loginStatus: EventEmitter<boolean> = new EventEmitter();
   
 
-  constructor(private restService:RestapiService, private router: Router) { }
+  constructor(private cookieService:CookieService, private restService:RestapiService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -39,12 +41,16 @@ export class LoginComponent implements OnInit {
      {
        console.log(response.body.jwt);
        this.restService.setJwt(response.body.jwt);
+       //this.loginStatus.emit(true);
+
+       this.cookieService.set("loggedIn", "true");
 
        this.restService.jwtTest().subscribe(
          (Response) => { this.jwtTest(Response);}
        );
 
         this.router.navigateByUrl('/shopping');
+        
 
      }
      else if(response.status === 403)
@@ -63,6 +69,18 @@ export class LoginComponent implements OnInit {
     console.log("Username or password is incorrect.");
   }
 
+  createNewUser()
+  {
+    this.restService.createUser(this.username, this.password).subscribe(
+      (Response) => {this.createUserResponse(Response)},
+      (Error) => {this.handleLoginError(Error);}
+    );
+  }
+
+  createUserResponse(response: any)
+  {
+    if(response.status === 201) { alert("En ny användare skapades."); }
+  }
   jwtTest(response:any)
   {
     console.log(response.body)

@@ -1,11 +1,18 @@
 
 
+<br>
 
-<div id="searchResults">
-    <p *ngFor="let item of basketItems">{{item.name}}
-        <button (click) = "addOneItemToBasket(item)">Add one</button>
-        <button (click) = "subtractOneItemFromBasket(item)"> Remove one </button>
+<h4> Din varukorg </h4>
+
+<div id="basketItemList">
+    <p *ngFor="let item of basketItems">{{item.name}},  {{item.amount}}
+        <button (click) = "addToBasket(item, 1)">Lägg till</button>
+        <button (click) = "addToBasket(item, -1)"> Ta bort </button>
         
     </p>
 
 </div>
+
+
+<button *ngIf="basketItems.length > 0" (click) = "makeOrder()"> Köp!! </button>
+<p *ngIf="basketItems.length == 0" >Varukorgen är för tillfället tom.</p>
