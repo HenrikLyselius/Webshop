@@ -10,7 +10,6 @@ import { ShoppingComponent } from './shopping/shopping.component';
 import { PayingComponent } from './paying/paying.component';
 import { CookieService } from 'ngx-cookie-service';
 import { AdminComponent } from './admin/admin.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -25,7 +24,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    NgbModule.forRoot(),
   ],
   providers: [RestapiService, CookieService],
   bootstrap: [AppComponent]
