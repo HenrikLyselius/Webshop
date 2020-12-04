@@ -24,14 +24,15 @@
               "src/assets"
             ],
             "styles": [
-              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css",
 
               {
                 "input": "./node_modules/bootstrap/dist/css/bootstrap.css"
               }
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/bootstrap/dist/css/bootstrap.css"
+            ]
           },
           "configurations": {
             "production": {

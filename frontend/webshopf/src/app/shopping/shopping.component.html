@@ -7,16 +7,20 @@
         <label for="fname">Hitta de varor du söker genom att använda sökfunktionen nedan.</label>
         <br>
         <input type="text" id="fname" name="fname" placeholder="Sök vara" [(ngModel)]="search">
-        <button type="button" class=".btn-warning" (click) = "searchItems()">Hitta varor</button>
+        <button type="button" class="blue" (click) = "searchItems()">Hitta varor</button>
     </form>
 
 
+    <br>
 
-    <div id="searchResults">
-        <p *ngFor="let item of itemList">{{item.name}}
-            <input type="text" id={{item.name}} value=1>
-            <button (click) = "addToBasket(item)">Add to basket</button>
-        </p>    
+    <div id="searchResults" class="container">
+        <div *ngFor="let item of itemList" class="row searchline">
+            <p class="col-sm-4">{{item.name}} </p>
+                <input class="col-sm-1 goodHeigt" type="text" id={{item.name}} value=1>
+                <button class="col-sm-3 goodHeigt blue" (click) = "addToBasket(item)">Add to basket</button>
+                <p class="col-sm-4"></p>
+            
+        </div>   
     </div>
 
 

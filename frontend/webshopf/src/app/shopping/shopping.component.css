@@ -4,3 +4,23 @@
   width: 60%;
   padding: 10px;
 }
+
+
+.blue {
+    background-color: blue;
+    color: white;
+}
+
+.blue:hover {
+    background-color: rgb(224, 255, 251);
+    color: blue;
+}
+
+
+#searchResults {
+    width: 100%;
+}
+
+.goodHeigt {
+    height: 70%;
+}
