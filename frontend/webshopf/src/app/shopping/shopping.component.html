@@ -1,21 +1,23 @@
+<div id="searchContainer">
 
-
-<br>
-<br>
-
-<form>
-    <label for="fname">Sök bland alla fantastiska varor.</label>
     <br>
     <br>
-    <input type="text" id="fname" name="fname" [(ngModel)]="search"><br>
-    <button type="button" (click) = "searchItems()">Hitta</button>
-</form>
+
+    <form>
+        <label for="fname">Hitta de varor du söker genom att använda sökfunktionen nedan.</label>
+        <br>
+        <input type="text" id="fname" name="fname" placeholder="Sök vara" [(ngModel)]="search">
+        <button type="button" class=".btn-warning" (click) = "searchItems()">Hitta varor</button>
+    </form>
 
 
 
-<div id="searchResults">
-    <p *ngFor="let item of itemList">{{item.name}}
-        <input type="text" id={{item.name}} value=1>
-        <button (click) = "addToBasket(item)">Add to basket</button>
-    </p>    
+    <div id="searchResults">
+        <p *ngFor="let item of itemList">{{item.name}}
+            <input type="text" id={{item.name}} value=1>
+            <button (click) = "addToBasket(item)">Add to basket</button>
+        </p>    
+    </div>
+
+
 </div>

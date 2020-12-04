@@ -14,6 +14,9 @@ export class LoginComponent implements OnInit {
 
   @Input('username') username: string;
   @Input('password') password: string;
+  showSignIn: boolean = true;
+  showSignUp: boolean = false;
+  showFormReset: boolean = false;
   @Output() loginStatus: EventEmitter<boolean> = new EventEmitter();
   
 
@@ -85,4 +88,22 @@ export class LoginComponent implements OnInit {
   {
     console.log(response.body)
   }
+
+  toggleSignIn() 
+  { 
+    this.showSignIn = !this.showSignIn;
+    this.showSignUp = !this.showSignUp;
+  }
+
+  toggleSignUp() 
+  { 
+    this.showSignUp = !this.showSignUp; 
+  }
+
+  toggleFormReset() 
+  { 
+    this.showFormReset = !this.showFormReset; 
+    this.showSignIn = !this.showSignIn;
+  }
 }
+
