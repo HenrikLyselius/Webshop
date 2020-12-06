@@ -79,7 +79,10 @@ body{
       margin: 0 auto;
   }
 
-  #forgot_pswd:hover {text-decoration: underline;}
+  #forgot_pswd:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
   
   .submit{
     background: -webkit-linear-gradient(0deg,  #2dfbff 0%, #3c96ff 100%);

@@ -40,10 +40,10 @@ public class UserResource {
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.POST)
-    public ResponseEntity<?> createUser(@RequestBody AuthenticationRequest userData)
+    public ResponseEntity<?> createUser(@RequestBody Map<String, String> userData)
     {
-        User newUser = new User(userData.getUsername(), userData.getPassword());
-        Optional<User> userOp = userRepository.findByUsername(userData.getUsername());
+        User newUser = new User(userData.get("username"), userData.get("password"), userData.get("email"));
+        Optional<User> userOp = userRepository.findByUsername(userData.get("username"));
         if(userOp.isPresent())
         {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(newUser);

@@ -1,6 +1,7 @@
 package com.lyselius.webshop.repositories;
 
 import com.lyselius.webshop.dbEntities.Basket;
+import com.lyselius.webshop.dbEntities.BasketItemHelper;
 import com.lyselius.webshop.dbEntities.Basket_item;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,4 +18,6 @@ public interface Basket_itemRepository extends JpaRepository<Basket_item, Intege
     Optional<Basket_item> findByBasketIDAndItemID(@Param("basketID") long basketID, @Param("itemID") long itemID);
 
     Optional<List<Basket_item>> findAllByBasketID(long basketID);
+
+
 }

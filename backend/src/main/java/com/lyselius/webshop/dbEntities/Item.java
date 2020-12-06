@@ -17,6 +17,7 @@ public class Item {
     long itemID;
     String name;
     String description;
+    int price;
 
 
     @JsonBackReference
@@ -65,4 +66,9 @@ public class Item {
     public void setBaskets(List<Basket> baskets) {
         this.baskets = baskets;
     }
+
+    public int getPrice() { return price; }
+
+    public void setPrice(int price) { this.price = price; }
+
 }

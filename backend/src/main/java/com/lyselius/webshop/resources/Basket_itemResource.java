@@ -1,28 +1,36 @@
 package com.lyselius.webshop.resources;
 
 import com.lyselius.webshop.dbEntities.Basket;
+import com.lyselius.webshop.dbEntities.BasketItemHelper;
 import com.lyselius.webshop.dbEntities.Basket_item;
 import com.lyselius.webshop.dbEntities.Item;
 import com.lyselius.webshop.repositories.BasketRepository;
 import com.lyselius.webshop.repositories.Basket_itemRepository;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.quartz.QuartzProperties;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.annotation.Repeatable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class Basket_itemResource {
 
-
     @Autowired
     Basket_itemRepository basket_itemRepository;
 
     @Autowired
     BasketRepository basketRepository;
+
+    @Autowired
+    JdbcTemplate jdbcTemplate;
 
     @RequestMapping(value = "/addbasketitem", method = RequestMethod.POST)
     public ResponseEntity<Basket_item> attBasketItem(@RequestBody Basket_item basket_item)
@@ -34,8 +42,8 @@ public class Basket_itemResource {
 
 
 
-    @RequestMapping(value = "/basket/additem/{basketID}/{itemID}/{change}/{name}", method = RequestMethod.PUT)
-    public void addItemToBasket(@PathVariable long basketID, @PathVariable long itemID, @PathVariable int change, @PathVariable String name)
+    @RequestMapping(value = "/basket/additem/{basketID}/{itemID}/{change}", method = RequestMethod.PUT)
+    public void addItemToBasket(@PathVariable long basketID, @PathVariable long itemID, @PathVariable int change)
     {
         System.out.println("Här i addItem");
         Optional<Basket_item> basket_item = basket_itemRepository.findByBasketIDAndItemID(basketID, itemID);
@@ -54,19 +62,67 @@ public class Basket_itemResource {
         else
         {
             System.out.println("Här i addItem else");
-            basket_itemRepository.save(new Basket_item(basketID, itemID, change, name));
+            basket_itemRepository.save(new Basket_item(basketID, itemID, change));
         }
     }
 
     @GetMapping(value = "/basketitems/{basketID}")
-    public ResponseEntity<List<Basket_item>> getBasketItems(@PathVariable long basketID)
+    public ResponseEntity<List<JSONObject>> getBasketItems(@PathVariable long basketID)
     {
-        Optional<List<Basket_item>> basket_items = basket_itemRepository.findAllByBasketID(basketID);
-        if(basket_items.isPresent())
+        String sql = "select \n" +
+                "\t(i.name) as name,\n" +
+                "    (i.price) as price,\n" +
+                "    i.itemID as itemID,\n" +
+                "\tamount as amount\n" +
+                "from basket_item \n" +
+                "inner join item i\n" +
+                "on basket_item.itemID = i.itemID\n" +
+                "where basketID = " + basketID;
+
+        List<JSONObject> list = new ArrayList<>();
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
+
+        for(Map row : rows)
         {
-            System.out.println("Här i basketitems!!");
-            return ResponseEntity.ok(basket_items.get());
+            JSONObject obj = new JSONObject();
+
+            obj.put("amount", row.get("amount"));
+            obj.put("name", row.get("name"));
+            obj.put("price", row.get("price"));
+            obj.put("itemID", row.get("itemID"));
+
+            list.add(obj);
         }
-        return ResponseEntity.ok(new ArrayList<Basket_item>());
+
+        return ResponseEntity.ok(list);
+    }
+
+    public List<BasketItemHelper> getHelperList(long basketID)
+    {
+
+        String sql = "select \n" +
+                "\t(i.name) as name,\n" +
+                "    (i.price) as price,\n" +
+                "\tamount as amount\n" +
+                "from basket_item \n" +
+                "inner join item i\n" +
+                "on basket_item.itemID = i.itemID\n" +
+                "where basketID = " + basketID;
+
+        List<BasketItemHelper> list = new ArrayList<>();
+
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
+
+        for(Map row : rows)
+        {
+            BasketItemHelper bih = new BasketItemHelper();
+
+            bih.setAmount((Integer) row.get("amount"));
+            bih.setName((String) row.get("name"));
+            bih.setPrice((Integer) row.get("price"));
+
+            list.add(bih);
+        }
+        return list;
     }
 }

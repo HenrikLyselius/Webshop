@@ -14,6 +14,12 @@ export class LoginComponent implements OnInit {
 
   @Input('username') username: string;
   @Input('password') password: string;
+  @Input('username') newUsername: string;
+  @Input('password') email: string;
+  @Input('password') newPassword: string;
+  @Input('username') ConfirmNewPassword: string;
+  
+
   showSignIn: boolean = true;
   showSignUp: boolean = false;
   showFormReset: boolean = false;
@@ -58,8 +64,7 @@ export class LoginComponent implements OnInit {
      }
      else if(response.status === 403)
      {
-       console.log("Här i erroren, vanlig respons.");
-      console.log("Username or password is incorrect.");
+       alert("Användarnamnet eller lösenordet är fel.");
      }
 
      
@@ -68,17 +73,53 @@ export class LoginComponent implements OnInit {
   handleLoginError(response: any)
   {
     console.log(response);
-    console.log("Här i erroren, äkta error.");
-    console.log("Username or password is incorrect.");
+    alert("Användarnamnet eller lösenordet är fel.");
   }
 
   createNewUser()
   {
-    this.restService.createUser(this.username, this.password).subscribe(
+    this.restService.createUser(this.newUsername, this.newPassword, this.email).subscribe(
       (Response) => {this.createUserResponse(Response)},
       (Error) => {this.handleLoginError(Error);}
     );
   }
+
+  createAccount()
+  {
+    console.log("Här i createAccounten!!");
+    if(this.allIsFilledInCorrectly())
+    {
+      this.createNewUser()
+    }
+  }
+
+  allIsFilledInCorrectly()
+  {
+    if(this.newUsername === undefined || this.email === undefined || this.newPassword === undefined || this.ConfirmNewPassword === undefined)
+    {
+      alert("Alla fälten måste fyllas i.");
+      return false;
+    }
+
+    if(this.newPassword !== this.ConfirmNewPassword)
+    {
+      alert("Du har angett två olika lösenord.")
+      return false;
+    }
+
+    if(this.newPassword.length < 5)
+    {
+      alert("Lösenordet måste vara minst sex symboler långt.");
+      return false;
+    }
+
+    // Do e-mail check here.
+
+    return true;
+  }
+
+
+
 
   createUserResponse(response: any)
   {

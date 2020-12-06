@@ -13,6 +13,6 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 
     Optional<Item> findByName(String name);
 
-    @Query(value = "select * from item i where i.name like %:searchString%", nativeQuery = true)
+    @Query(value = "select * from item i where i.name like %:searchString% limit 10", nativeQuery = true)
     Optional<List<Item>> findBySearchString(@Param("searchString") String searchString);
 }

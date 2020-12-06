@@ -17,7 +17,6 @@ public class Basket_item {
     private long basketID;
     private long itemID;
     private int amount;
-    private String name;
 
 
     public Basket_item()
@@ -25,21 +24,14 @@ public class Basket_item {
 
     }
 
-    public Basket_item(long basketID, long itemID, int amount, String name)
+    public Basket_item(long basketID, long itemID, int amount)
     {
         this.basketID = basketID;
         this.itemID = itemID;
         this.amount = amount;
-        this.name = name;
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public long getBasket_itemID() {
         return basket_itemID;

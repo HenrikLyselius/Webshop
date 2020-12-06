@@ -8,3 +8,17 @@
 }
 
 .full { height: 100%;}
+
+.blue {
+    background-color: blue;
+    color: white;
+}
+
+.blue:hover {
+    background-color: rgb(224, 255, 251);
+    color: blue;
+}
+
+.goodHeigt {
+    height: 70%;
+}

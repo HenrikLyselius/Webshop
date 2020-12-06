@@ -94,10 +94,10 @@ export class RestapiService {
     return this.http.get("http://localhost:8080/basketitems/" + basketID, this.optionsJwt);
   }
 
-  public addItemToBasket(itemID:number, basketID: number, change: number, name: string)
+  public addItemToBasket(itemID:number, basketID: number, change: number)
   {
     let obj = {};
-    return this.http.put("http://localhost:8080/basket/additem/" + basketID + "/" + itemID + "/" + change + "/" + name, obj, this.optionsJwt);
+    return this.http.put("http://localhost:8080/basket/additem/" + basketID + "/" + itemID + "/" + change, obj, this.optionsJwt);
   }
 
   public removeItemFromBasket(itemID:number, basketID: number, change: number)
@@ -123,9 +123,9 @@ export class RestapiService {
     return this.http.put("http://localhost:8080/order/expediate/" + orderID, obj, this.optionsJwt);
   }
 
-  public createUser(username: string, password: string)
+  public createUser(username: string, password: string, email: string)
   {
-    let object = {"username": username, "password": password};
+    let object = {"username": username, "password": password, "email": email};
     return this.http.post<any>("http://localhost:8080/user", object, this.optionsLogin);
   }
 

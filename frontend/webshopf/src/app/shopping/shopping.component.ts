@@ -36,7 +36,6 @@ export class ShoppingComponent implements OnInit {
 
 
   initialiseInvites() {
-    // Set default values and re-fetch any data you need.
     this.getBasket();
   }
 
@@ -130,14 +129,13 @@ export class ShoppingComponent implements OnInit {
   addToBasket(item: Item)
   {
     let elem = document.getElementById(item.name);
-    console.log(elem);
     let change = parseInt((<HTMLInputElement>elem).value, 10);
-    console.log(change);
 
-    console.log("I addToBasket: ItemID " + item.itemID + " basketID: " + this.basket.basketID);
-
-    this.restService.addItemToBasket(item.itemID, this.basket.basketID, change, item.name).subscribe(
-      (Response) => { console.log(Response); },
+    this.restService.addItemToBasket(item.itemID, this.basket.basketID, change).subscribe(
+      (Response) => { 
+        console.log(Response);
+        alert(change + " " + item.name + " lades i varukorgen.");
+      },
       (Error) => { this.handleErrorResponse(Error); }
     )
   }

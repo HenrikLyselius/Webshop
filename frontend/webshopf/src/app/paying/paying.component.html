@@ -2,17 +2,27 @@
 
 <br>
 
-<h4> Din varukorg </h4>
 
-<div id="basketItemList">
-    <p *ngFor="let item of basketItems">{{item.name}},  {{item.amount}}
-        <button (click) = "addToBasket(item, 1)">Lägg till</button>
-        <button (click) = "addToBasket(item, -1)"> Ta bort </button>
-        
-    </p>
 
+<div id="basketInfoContainer">
+
+    <h4> Din varukorg </h4>
+    <p *ngIf="basketItems.length > 0"> Pris: {{price}} </p>
+    <br>
+    <div *ngFor="let item of basketItems" class="row" >
+        <p class="col-sm-3">{{item.name}},  {{item.amount}} a {{item.price}} kr </p>
+        <button class="col-sm-1 goodHeigt blue"(click) = "addToBasket(item, 1)"> + 1</button>
+        <button class="col-sm-1 goodHeigt blue"(click) = "addToBasket(item, -1)"> - 1 </button>
+        <p class="col-sm-7 "></p>
+    </div>
+
+
+    
+    <br>
+    <br>
+    <button *ngIf="basketItems.length > 0" class="goodHeigt blue" (click) = "makeOrder()"> Köp!! </button>
+    <p *ngIf="basketItems.length == 0" >Varukorgen är för tillfället tom.</p>
 </div>
 
 
-<button *ngIf="basketItems.length > 0" (click) = "makeOrder()"> Köp!! </button>
-<p *ngIf="basketItems.length == 0" >Varukorgen är för tillfället tom.</p>
+

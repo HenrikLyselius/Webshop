@@ -15,10 +15,10 @@
 
     <div id="searchResults" class="container">
         <div *ngFor="let item of itemList" class="row searchline">
-            <p class="col-sm-4">{{item.name}} </p>
-                <input class="col-sm-1 goodHeigt" type="text" id={{item.name}} value=1>
-                <button class="col-sm-3 goodHeigt blue" (click) = "addToBasket(item)">Add to basket</button>
-                <p class="col-sm-4"></p>
+            <p class="col-sm-4 col-md-4">{{item.name}}, {{item.price}} kr </p>
+                <input class="col-sm-1 col-md-1 goodHeigt" type="text" id={{item.name}} value=1>
+                <button class="col-sm-5 col-md-3 goodHeigt blue" (click) = "addToBasket(item)">Lägg till vara</button>
+                <p class="col-sm-2 col-md-4"></p>
             
         </div>   
     </div>
