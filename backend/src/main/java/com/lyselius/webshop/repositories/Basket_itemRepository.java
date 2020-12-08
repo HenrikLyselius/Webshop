@@ -1,7 +1,5 @@
 package com.lyselius.webshop.repositories;
 
-import com.lyselius.webshop.dbEntities.Basket;
-import com.lyselius.webshop.dbEntities.BasketItemHelper;
 import com.lyselius.webshop.dbEntities.Basket_item;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

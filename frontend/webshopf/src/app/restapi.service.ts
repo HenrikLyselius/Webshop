@@ -76,11 +76,14 @@ export class RestapiService {
   }
 
 
-  public addItem(name: string, description: string)
+  public addItem(name: string, description: string, price: number)
   {
     
-    let obj = {};
-    return this.http.post("http://localhost:8080/item/" + name + "/" + description, obj, this.optionsJwt);
+    let obj = {"name": name,
+               "description": description,
+               "price": price};
+
+    return this.http.post("http://localhost:8080/item/", obj, this.optionsJwt);
   }
 
   public getBasket()
@@ -114,7 +117,7 @@ export class RestapiService {
 
   public getOrdersNotExpediated()
   {
-    return this.http.get("http://localhost:8080/orders/notexpediated", this.optionsJwt);
+    return this.http.get("http://localhost:8080/orders/notexpediated2", this.optionsJwt);
   }
 
   public expediateOrder(orderID: number)
@@ -133,5 +136,12 @@ export class RestapiService {
   public isUserAdmin()
   {
     return this.http.get("http://localhost:8080/isadmin/" + this.username, this.optionsJwt)
+  }
+
+
+
+  public getOrderDetails(orderID: string)
+  {
+    return this.http.get("http://localhost:8080/order/getdetails/" + orderID, this.optionsJwt);
   }
 }

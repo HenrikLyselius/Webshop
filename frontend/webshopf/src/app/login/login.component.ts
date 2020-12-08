@@ -14,10 +14,10 @@ export class LoginComponent implements OnInit {
 
   @Input('username') username: string;
   @Input('password') password: string;
-  @Input('username') newUsername: string;
-  @Input('password') email: string;
-  @Input('password') newPassword: string;
-  @Input('username') ConfirmNewPassword: string;
+  @Input('newUsername') newUsername: string = "";
+  @Input('email') email: string = "";
+  @Input('newPassword') newPassword: string = "";
+  @Input('confirmNewPassword') confirmNewPassword: string = "";
   
 
   showSignIn: boolean = true;
@@ -80,13 +80,20 @@ export class LoginComponent implements OnInit {
   {
     this.restService.createUser(this.newUsername, this.newPassword, this.email).subscribe(
       (Response) => {this.createUserResponse(Response)},
-      (Error) => {this.handleLoginError(Error);}
+      (Error) => {this.handleSignUpError(Error);}
     );
+  }
+
+  handleSignUpError(error: any)
+  {
+    if(error.status === 409)
+    {
+      alert("Användarnamnet är redan taget.");
+    }
   }
 
   createAccount()
   {
-    console.log("Här i createAccounten!!");
     if(this.allIsFilledInCorrectly())
     {
       this.createNewUser()
@@ -95,13 +102,15 @@ export class LoginComponent implements OnInit {
 
   allIsFilledInCorrectly()
   {
-    if(this.newUsername === undefined || this.email === undefined || this.newPassword === undefined || this.ConfirmNewPassword === undefined)
+      console.log(this.newUsername.length, this.email.length, this.newPassword.length, this.confirmNewPassword.length);
+
+    if(this.newUsername.length == 0 || this.email.length == 0 || this.newPassword.length == 0 || this.confirmNewPassword.length == 0)
     {
       alert("Alla fälten måste fyllas i.");
       return false;
     }
 
-    if(this.newPassword !== this.ConfirmNewPassword)
+    if(this.newPassword !== this.confirmNewPassword)
     {
       alert("Du har angett två olika lösenord.")
       return false;
@@ -113,9 +122,19 @@ export class LoginComponent implements OnInit {
       return false;
     }
 
-    // Do e-mail check here.
+    if(!this.emailIsVAlid(this.email))
+    {
+      alert("Du har inte angett en giltig epost-adress.");
+      return false;
+    }
 
     return true;
+  }
+
+
+  emailIsVAlid(email: string)
+  {
+    return /\S+@\S+\.\S+/.test(email);
   }
 
 

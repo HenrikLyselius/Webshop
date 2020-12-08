@@ -46,7 +46,7 @@ public class UserResource {
         Optional<User> userOp = userRepository.findByUsername(userData.get("username"));
         if(userOp.isPresent())
         {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(newUser);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(newUser);
         }
         else
         {

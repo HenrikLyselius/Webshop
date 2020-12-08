@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -34,19 +35,17 @@ public class ItemResource {
     }
 
     @RequestMapping(value = "/item", method = RequestMethod.POST)
-    public ResponseEntity<?> addItem(@RequestBody Item item)
+    public ResponseEntity<?> addItem(@RequestBody Map<String, String> item)
     {
-        System.out.println(item.getName());
-        /*Item newItem = new Item(item.getName(), item.getDescription());
+        Item newItem = new Item(item.get("name"), item.get("description"), Integer.parseInt(item.get("price")));
 
-        Optional<Item> earlierItem = itemRepository.findByName(item.getName());
+        Optional<Item> earlierItem = itemRepository.findByName(newItem.getName());
         if(earlierItem.isPresent())
-        { return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(item); }
-
+        { return ResponseEntity.status(HttpStatus.CONFLICT).body(newItem); }
 
         itemRepository.save(newItem);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newItem);*/
-        return ResponseEntity.ok(item);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newItem);
+
     }
 
    /* @RequestMapping(value = "/item/{name}/{description}", method = RequestMethod.POST)

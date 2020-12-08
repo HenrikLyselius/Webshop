@@ -1,19 +1,14 @@
 package com.lyselius.webshop.resources;
 
-import com.lyselius.webshop.dbEntities.Basket;
-import com.lyselius.webshop.dbEntities.BasketItemHelper;
 import com.lyselius.webshop.dbEntities.Basket_item;
-import com.lyselius.webshop.dbEntities.Item;
 import com.lyselius.webshop.repositories.BasketRepository;
 import com.lyselius.webshop.repositories.Basket_itemRepository;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.quartz.QuartzProperties;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.annotation.Repeatable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -67,7 +62,13 @@ public class Basket_itemResource {
     }
 
     @GetMapping(value = "/basketitems/{basketID}")
-    public ResponseEntity<List<JSONObject>> getBasketItems(@PathVariable long basketID)
+    public ResponseEntity<List<JSONObject>> RestGetBasketItems(@PathVariable long basketID)
+    {
+        return ResponseEntity.ok(getBasketItems(basketID));
+    }
+
+
+    public List<JSONObject> getBasketItems(long basketID)
     {
         String sql = "select \n" +
                 "\t(i.name) as name,\n" +
@@ -94,35 +95,6 @@ public class Basket_itemResource {
             list.add(obj);
         }
 
-        return ResponseEntity.ok(list);
-    }
-
-    public List<BasketItemHelper> getHelperList(long basketID)
-    {
-
-        String sql = "select \n" +
-                "\t(i.name) as name,\n" +
-                "    (i.price) as price,\n" +
-                "\tamount as amount\n" +
-                "from basket_item \n" +
-                "inner join item i\n" +
-                "on basket_item.itemID = i.itemID\n" +
-                "where basketID = " + basketID;
-
-        List<BasketItemHelper> list = new ArrayList<>();
-
-        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
-
-        for(Map row : rows)
-        {
-            BasketItemHelper bih = new BasketItemHelper();
-
-            bih.setAmount((Integer) row.get("amount"));
-            bih.setName((String) row.get("name"));
-            bih.setPrice((Integer) row.get("price"));
-
-            list.add(bih);
-        }
         return list;
     }
 }

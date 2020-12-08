@@ -1,32 +1,50 @@
+<div class=row>
 
-<br>
-<br>
 
-<button type="button" (click) = "showOrders()">Visa icke signerade ordrar</button>
 
-<br>
-<br>
+    <div class="col-sm-6"> 
+        <div id="showOrders">
+            <br>
+            <br>
 
-<div id="searchResults">
-    <p *ngFor="let order of orderList">OrderID: {{order.orderID}}, Expedierad: {{order.expediated}}
-        <button *ngIf="order.expediated === false" (click) = "expediateOrder(order)">Markera som färdig</button>
-    </p>    
+            <button type="button" class="blue" (click) = "showOrders()">Visa icke signerade ordrar</button>
+            <br>
+            <br>
+
+
+            <div *ngFor="let order of orderList" id="searchResults">
+                <p>OrderID: {{order.orderID}}</p>
+                <div id={{order.orderID}} style="display:none;">
+                    <p>Kundnr: {{order.orderDetails.userID}}, Datum: {{order.date}} Expedierad: {{order.expediated}} </p>
+                    <div *ngFor="let item of order.orderDetails.items" class="row"  >
+                        <p class="col-sm-5">Produkt: {{item.name}},  Antal: {{item.amount}} a {{item.price}} kr </p>
+                        <p class="col-sm-7 "></p>
+                    </div>
+                </div>
+                <button class="goodHeigt blue" (click) = "expediateOrder(order)">Markera som färdig</button>
+                <button class="goodHeigt blue" (click) = "toggleOrderDetails(order.orderID)"> Visa detaljer </button> <br>
+                <br>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div id="newOrder">
+
+            <br>
+            <br>
+            <h4>Lägg till en ny vara i systemet.</h4>
+            <form>
+                <label for="name">Namn</label><br>
+                <input type="text" id="name" name="name" [(ngModel)]="name"><br>
+                <label for="description">Beskrivning</label><br>
+                <input type="text" id="desription" name="description" [(ngModel)]="description"><br>
+                <label for="price">Pris</label><br>
+                <input type="text" id="price" name="price" [(ngModel)]="price"><br>
+                <button type="button" class="blue" (click) = "addItem()">Lägg till vara</button>
+                
+            </form>
+        </div>
+    </div>
+
 </div>
-
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-
-<h4>Lägg till en ny vara i systemet.</h4>
-<form>
-    <label for="name">Namn</label><br>
-    <input type="text" id="name" name="name" [(ngModel)]="name"><br>
-    <label for="description">Beskrivning</label><br>
-    <input type="text" id="desription" name="description" [(ngModel)]="description"><br>
-    <button type="button" (click) = "addItem()">Lägg till vara</button>
-</form>

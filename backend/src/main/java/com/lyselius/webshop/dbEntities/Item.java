@@ -29,10 +29,11 @@ public class Item {
 
     }
 
-    public Item(String name, String description)
+    public Item(String name, String description, int price)
     {
         this.name = name;
         this.description = description;
+        this.price = price;
     }
 
     public long getItemID() {
