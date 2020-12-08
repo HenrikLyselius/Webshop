@@ -47,20 +47,7 @@ public class ItemResource {
         return ResponseEntity.status(HttpStatus.CREATED).body(newItem);
 
     }
-
-   /* @RequestMapping(value = "/item/{name}/{description}", method = RequestMethod.POST)
-    public ResponseEntity<?> addItem(@PathVariable String name, @PathVariable String description)
-    {
-        Item newItem = new Item(name, description);
-
-        Optional<Item> earlierItem = itemRepository.findByName(name);
-        if(earlierItem.isPresent())
-        { return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(newItem); }
-
-
-        itemRepository.save(newItem);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newItem);
-    }*/
+    
 
     @GetMapping(value = "/item/{searchString}")
     public ResponseEntity<?> getItemBySearchString(@PathVariable String searchString)

@@ -76,23 +76,7 @@ export class AdminComponent implements OnInit {
 
 
 
-  handleOrderDetailsResponse(orderID: string, response: any)
-  {
-    //console.log(response.body);
-    /* let orderDetails = JSON.parse(response.body);
-    console.log(orderDetails.username);
-    let element = document.getElementById(orderID);
-    element.children[0].innerHTML = "userID: " + orderDetails.userID;
-    element.children[1].innerHTML = "username: " + orderDetails.username;
-
-    let detailsString; */
-
-   /*  for(let i = 0; i < orderDetails.items.length; i++)
-    {
-      detailsString = detailsString + "produkt: " + orderDetails.items[i].name + "<br />";
-    }
-    document.getElementById(orderID).children[2].innerHTML = detailsString; */
-  }
+ 
 
 
   addItem()
