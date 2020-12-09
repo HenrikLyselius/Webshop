@@ -9,6 +9,7 @@ import com.lyselius.webshop.repositories.BasketRepository;
 import com.lyselius.webshop.repositories.UserRepository;
 import com.lyselius.webshop.repositories.User_roleRepository;
 import com.lyselius.webshop.services.MailServiceImp;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -60,8 +61,9 @@ public class UserResource {
 
 
     @GetMapping(value ="/user/forgotpassword/{username}")
-    public ResponseEntity<String> setNewPasswordAndSendMail(@PathVariable String username)
+    public ResponseEntity<JSONObject> setNewPasswordAndSendMail(@PathVariable String username)
     {
+        JSONObject response = new JSONObject();
         Optional<User> userOp = userRepository.findByUsername(username);
 
         if(userOp.isPresent())
@@ -75,10 +77,12 @@ public class UserResource {
 
             mailService.sendNewPasswordEmail(user.getEmail(), newPassword);
 
-            return ResponseEntity.ok("Jappis");
+            response.put("message", "Jappis");
+            return ResponseEntity.ok(response);
         }
 
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Nejnej");
+        response.put("message", "Nejnej");
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
     }
 
     @GetMapping(value = "/isadmin/{username}")

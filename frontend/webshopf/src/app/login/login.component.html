@@ -46,8 +46,8 @@
         </form>
 
             <form *ngIf="showFormReset" action="#" class="form-reset">
-                <input type="email" id="resetEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-                <button class="btn btn-primary btn-block" type="submit">Återställ lösenord</button>
+                <input type="email" id="resetEmail" class="form-control" placeholder="Användarnamn" required="" autofocus="" name="usernameResetPassword" [(ngModel)]="usernameResetPassword">
+                <button class="btn btn-primary btn-block" type="submit" (click)="getNewPassword()">Återställ lösenord</button>
                 <a href="#" id="cancel_reset"><i class="fas fa-angle-left"></i> Tillbaka</a>
             </form>
 

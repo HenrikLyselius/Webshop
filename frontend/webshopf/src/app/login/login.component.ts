@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   @Input('email') email: string = "";
   @Input('newPassword') newPassword: string = "";
   @Input('confirmNewPassword') confirmNewPassword: string = "";
+  @Input('usernameResetPassword') usernameResetPassword = "";
   
 
   showSignIn: boolean = true;
@@ -138,12 +139,28 @@ export class LoginComponent implements OnInit {
   }
 
 
+  getNewPassword()
+  {
+    this.restService.getNewPassword(this.usernameResetPassword).subscribe(
+      (Response) => {this.handleGetNewPasswordResponse(Response)},
+      (Error) => {console.log(Error);}
+    );
+  }
+
+  handleGetNewPasswordResponse(response: any)
+  {
+    if(response.status === 200)
+    {
+      alert("Ett mejl med ett nytt lösenord har skickats till det konto som är kopplat till användarnamnet.");
+    }
+  }
 
 
   createUserResponse(response: any)
   {
     if(response.status === 201) { alert("En ny användare skapades."); }
   }
+
   jwtTest(response:any)
   {
     console.log(response.body)

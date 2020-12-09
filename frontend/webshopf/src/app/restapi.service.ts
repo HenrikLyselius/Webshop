@@ -134,10 +134,13 @@ export class RestapiService {
     return this.http.get("http://localhost:8080/isadmin/" + this.username, this.optionsJwt)
   }
 
-
-
   public getOrderDetails(orderID: string)
   {
     return this.http.get("http://localhost:8080/order/getdetails/" + orderID, this.optionsJwt);
+  }
+
+  public getNewPassword(username: String)
+  {
+    return this.http.get("http://localhost:8080/user/forgotpassword/" + username, this.optionsLogin);
   }
 }
