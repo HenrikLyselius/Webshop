@@ -15,6 +15,7 @@ export class AppComponent {
   loggedIn: boolean = false;
   navigationSubscription;
   userIsAdmin: boolean = false;
+  navbarOpen; boolean = false;
 
 
   constructor(private cookieService:CookieService, private router: Router, private restapiService: RestapiService)
@@ -92,5 +93,10 @@ export class AppComponent {
   showPayingPage()
   {
     this.router.navigateByUrl('/paying');
+  }
+
+
+  toggleNavbar() {
+    this.navbarOpen = !this.navbarOpen;
   }
 }

@@ -60,7 +60,7 @@ public class Order_Resource {
 
 
 
-    @GetMapping(value = "/orders/notexpediated")
+    /*@GetMapping(value = "/orders/notexpediated")
     public ResponseEntity<List<Order_>> getNotExpediatedOrders()
     {
         Optional<List<Order_>> ordersOp = order_repository.findAllByExpediated(false);
@@ -71,10 +71,10 @@ public class Order_Resource {
         }
 
         return ResponseEntity.ok(new ArrayList<>());
-    }
+    }*/
 
-    @GetMapping(value = "/orders/notexpediated2")
-    public ResponseEntity<JSONObject> getNotExpediatedOrders2()
+    @GetMapping(value = "/orders/notexpediated")
+    public ResponseEntity<JSONObject> getNotExpediatedOrders()
     {
         JSONObject response = new JSONObject();
         List<JSONObject> list = new ArrayList<>();
@@ -117,21 +117,10 @@ public class Order_Resource {
     @RequestMapping(value = "/order/getdetails/{orderID}")
     public ResponseEntity<JSONObject> getOrderDetailsREST(@PathVariable long orderID)
     {
-        Optional<Order_> orderOp = order_repository.findByOrderID(orderID);
-        JSONObject response = new JSONObject();
+        JSONObject response = getOrderDetails(orderID);
+        if(response == null) { return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response); }
 
-        if(orderOp.isPresent())
-        {
-            long basketID = orderOp.get().getBasketID();
-
-            response.put("userID", basketRepository.findByBasketID(basketID).get().getUser().getuserID());
-            response.put("username", basketRepository.findByBasketID(basketID).get().getUser().getUsername());
-            response.put("items", basket_itemResource.getBasketItems(basketID));
-
-            return ResponseEntity.ok(response);
-        }
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        return ResponseEntity.ok(response);
 
     }
 

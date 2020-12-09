@@ -8,6 +8,7 @@ import com.lyselius.webshop.dbEntities.User_role;
 import com.lyselius.webshop.repositories.BasketRepository;
 import com.lyselius.webshop.repositories.UserRepository;
 import com.lyselius.webshop.repositories.User_roleRepository;
+import com.lyselius.webshop.services.MailServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,13 +32,11 @@ public class UserResource {
     @Autowired
     BasketRepository basketRepository;
 
+    @Autowired
+    MailServiceImp mailService;
 
-    @RequestMapping(value = "/testuser", method = RequestMethod.POST)
-    public ResponseEntity<String> testUser(@RequestBody Map<String, Object> map)
-    {
-        System.out.println(map.get("userID"));
-        return ResponseEntity.ok("Funkish!!");
-    }
+
+
 
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     public ResponseEntity<?> createUser(@RequestBody Map<String, String> userData)
@@ -58,6 +57,29 @@ public class UserResource {
         }
     }
 
+
+
+    @GetMapping(value ="/user/forgotpassword/{username}")
+    public ResponseEntity<String> setNewPasswordAndSendMail(@PathVariable String username)
+    {
+        Optional<User> userOp = userRepository.findByUsername(username);
+
+        if(userOp.isPresent())
+        {
+           User user = userOp.get();
+
+
+            // Generate a new password.
+            String newPassword = "Nytt är det här ser du.";
+
+
+            mailService.sendNewPasswordEmail(user.getEmail(), newPassword);
+
+            return ResponseEntity.ok("Jappis");
+        }
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Nejnej");
+    }
 
     @GetMapping(value = "/isadmin/{username}")
     public boolean isUserAdmin(@PathVariable String username)

@@ -32,8 +32,7 @@ public class BasketResource {
     public ResponseEntity<Basket> getActiveBasket(@PathVariable String username)
     {
         Optional<User> userOptional = userRepository.findByUsername(username);
-        User user = userOptional.get();
-        long userID = user.getuserID();
+        long userID = userOptional.get().getuserID();
         Optional<Basket> basketOptional = basketRepository.findByUserIDandActive(userID);
         Basket basket = basketOptional.get();
 

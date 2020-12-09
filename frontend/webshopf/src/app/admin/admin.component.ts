@@ -57,22 +57,25 @@ export class AdminComponent implements OnInit {
  
   toggleOrderDetails(orderID: any)
   {
-    if(document.getElementById(orderID).getAttribute("style") === "display:none;")
+    if(document.getElementById(orderID).getAttribute("style") != "display:block;")
     {
       document.getElementById(orderID).setAttribute("style", "display:block;");
+      document.getElementById("details" + orderID).innerHTML = "Dölj detaljer";
     }
-    else {document.getElementById(orderID).setAttribute("style", "display:none;");}
-    
+    else {
+      document.getElementById(orderID).setAttribute("style", "display:none;");
+      document.getElementById("details" + orderID).innerHTML = "Visa detaljer";
+    }
   }
 
 
-  showOrderDetails(orderID: string)
+ /*  showOrderDetails(orderID: string)
   {
     let orderInfo = this.restService.getOrderDetails(orderID).subscribe(
       (Response) => { this.handleOrderDetailsResponse(orderID, (Response)); },
       (Error) => {console.log(Error);}
     )
-  }
+  } */
 
 
 

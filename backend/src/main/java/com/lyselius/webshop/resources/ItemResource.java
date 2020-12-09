@@ -22,7 +22,7 @@ public class ItemResource {
     @Autowired
     ItemRepository itemRepository;
 
-    @GetMapping(value = "/testitem")
+    /*@GetMapping(value = "/testitem")
     public ResponseEntity<Item> testItem()
     {
         Item newItem = new Item();
@@ -32,7 +32,7 @@ public class ItemResource {
         newItem.setDescription("En beskri");
 
         return ResponseEntity.ok(newItem);
-    }
+    }*/
 
     @RequestMapping(value = "/item", method = RequestMethod.POST)
     public ResponseEntity<?> addItem(@RequestBody Map<String, String> item)
@@ -47,20 +47,14 @@ public class ItemResource {
         return ResponseEntity.status(HttpStatus.CREATED).body(newItem);
 
     }
-    
+
 
     @GetMapping(value = "/item/{searchString}")
     public ResponseEntity<?> getItemBySearchString(@PathVariable String searchString)
     {
         Optional<List<Item>> items = itemRepository.findBySearchString(searchString);
 
-        if(items.isPresent())
-        {
-            return ResponseEntity.ok(items.get());
-        }
-        else
-        {
-            return ResponseEntity.ok(new ArrayList<Item>());
-        }
+        if(items.isPresent()) { return ResponseEntity.ok(items.get()); }
+        else { return ResponseEntity.ok(new ArrayList<Item>()); }
     }
 }

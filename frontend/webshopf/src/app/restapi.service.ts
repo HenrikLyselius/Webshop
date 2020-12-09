@@ -103,11 +103,7 @@ export class RestapiService {
     return this.http.put("http://localhost:8080/basket/additem/" + basketID + "/" + itemID + "/" + change, obj, this.optionsJwt);
   }
 
-  public removeItemFromBasket(itemID:number, basketID: number, change: number)
-  {
-    let obj = {};
-    return
-  }
+  
 
   public makeOrder(basketID: number)
   {
@@ -117,7 +113,7 @@ export class RestapiService {
 
   public getOrdersNotExpediated()
   {
-    return this.http.get("http://localhost:8080/orders/notexpediated2", this.optionsJwt);
+    return this.http.get("http://localhost:8080/orders/notexpediated", this.optionsJwt);
   }
 
   public expediateOrder(orderID: number)

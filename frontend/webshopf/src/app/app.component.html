@@ -2,12 +2,13 @@
 
 
 
+
     <nav class="navbar navbar-expand-lg navbar-light bg-primary">
         <a class="navbar-brand" ><img src="assets/images/Logga.png" width="140" height="40" alt=""></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" (click)="toggleNavbar()">
         <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="collapse navbar-collapse" [ngClass]="{ 'show': navbarOpen }" id="navbarNav">
         <ul class="navbar-nav">
             <li *ngIf="loggedIn" class="nav-item lightHover">
             <a class="nav-link" (click)="showShoppingPage()">Handla <span class="sr-only">(current)</span></a>
@@ -24,6 +25,30 @@
         </ul>
         </div>
     </nav>
+
+
+   <!--  <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+        <a class="navbar-brand" ><img src="assets/images/Logga.png" width="140" height="40" alt=""></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse show" id="navbarNav">
+        <ul class="navbar-nav">
+            <li *ngIf="loggedIn" class="nav-item lightHover">
+            <a class="nav-link" (click)="showShoppingPage()">Handla <span class="sr-only">(current)</span></a>
+            </li>
+            <li *ngIf="loggedIn" class="nav-item">
+            <a class="nav-link lightHover" (click)="showPayingPage()">Gå till kassan</a>
+            </li>
+            <li *ngIf="userIsAdmin" class="nav-item">
+            <a class="nav-link lightHover" (click) = goToAdminPage()>Admin</a>
+            </li>
+            <li *ngIf="loggedIn" class="nav-item lightHover">
+            <a class="nav-link" (click)="logOut()">Logga ut</a>
+            </li>
+        </ul>
+        </div>
+    </nav> -->
 
 
 

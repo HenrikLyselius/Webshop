@@ -26,13 +26,13 @@ public class Basket_itemResource {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
-
+/*
     @RequestMapping(value = "/addbasketitem", method = RequestMethod.POST)
     public ResponseEntity<Basket_item> attBasketItem(@RequestBody Basket_item basket_item)
     {
         System.out.println(basket_item.getAmount());
         return ResponseEntity.ok(basket_item);
-    }
+    }*/
 
 
 
@@ -40,7 +40,6 @@ public class Basket_itemResource {
     @RequestMapping(value = "/basket/additem/{basketID}/{itemID}/{change}", method = RequestMethod.PUT)
     public void addItemToBasket(@PathVariable long basketID, @PathVariable long itemID, @PathVariable int change)
     {
-        System.out.println("Här i addItem");
         Optional<Basket_item> basket_item = basket_itemRepository.findByBasketIDAndItemID(basketID, itemID);
         if(basket_item.isPresent())
         {
@@ -48,21 +47,16 @@ public class Basket_itemResource {
             if(basket_item.get().getAmount() < 1)
             {
                 basket_itemRepository.delete(basket_item.get());
-                System.out.println("Basket_item borttaget!!");
-
             }
             else { basket_itemRepository.save(basket_item.get()); }
 
         }
-        else
-        {
-            System.out.println("Här i addItem else");
-            basket_itemRepository.save(new Basket_item(basketID, itemID, change));
-        }
+        else { basket_itemRepository.save(new Basket_item(basketID, itemID, change)); }
     }
 
+
     @GetMapping(value = "/basketitems/{basketID}")
-    public ResponseEntity<List<JSONObject>> RestGetBasketItems(@PathVariable long basketID)
+    public ResponseEntity<List<JSONObject>> GetBasketItemsREST(@PathVariable long basketID)
     {
         return ResponseEntity.ok(getBasketItems(basketID));
     }

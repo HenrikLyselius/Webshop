@@ -22,7 +22,7 @@
                     </div>
                 </div>
                 <button class="goodHeigt blue" (click) = "expediateOrder(order)">Markera som färdig</button>
-                <button class="goodHeigt blue" (click) = "toggleOrderDetails(order.orderID)"> Visa detaljer </button> <br>
+                <button id=details{{order.orderID}}  class="goodHeigt blue" (click) = "toggleOrderDetails(order.orderID)"> Visa detaljer </button> <br>
                 <br>
             </div>
         </div>
