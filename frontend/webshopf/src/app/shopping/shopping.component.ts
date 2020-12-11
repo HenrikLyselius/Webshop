@@ -89,17 +89,15 @@ export class ShoppingComponent implements OnInit {
         li.innerHTML = "item: " + this.itemList[i].name + "     description: " + this.itemList[i].description;
         ul.appendChild(li);
       }
-     
-      
     }
   
 
-
+/* 
 
     clearlist (){ 
       let elem = document.getElementById('ul');
       elem.parentNode.removeChild(elem);
-    } 
+    }  */
 
   handleErrorResponse(error: any)
   {
@@ -141,5 +139,5 @@ export class ShoppingComponent implements OnInit {
   }
 
 
-  
+
 }

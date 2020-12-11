@@ -43,16 +43,9 @@ export class LoginComponent implements OnInit {
 
   handleLoginResponse(response: any)
   {
-      //console.log(response.body);
-      console.log(response.status);
-      console.log(response.body);
-
      if(response.status === 200)
      {
-       console.log(response.body.jwt);
        this.restService.setJwt(response.body.jwt);
-       //this.loginStatus.emit(true);
-
        this.cookieService.set("loggedIn", "true");
 
        this.restService.jwtTest().subscribe(
