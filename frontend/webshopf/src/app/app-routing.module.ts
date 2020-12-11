@@ -4,13 +4,15 @@ import { LoginComponent } from './login/login.component';
 import { ShoppingComponent } from './shopping/shopping.component';
 import { PayingComponent } from './paying/paying.component';
 import { AdminComponent } from './admin/admin.component';
+import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'shopping', component: ShoppingComponent, runGuardsAndResolvers: 'always', },
-  { path: 'paying', component: PayingComponent}
+  { path: 'paying', component: PayingComponent},
+  { path: 'resetpassword/:token/:username', component: ResetpasswordComponent }
 ];
 
 @NgModule({

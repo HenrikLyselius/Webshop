@@ -10,6 +10,7 @@ import { ShoppingComponent } from './shopping/shopping.component';
 import { PayingComponent } from './paying/paying.component';
 import { CookieService } from 'ngx-cookie-service';
 import { AdminComponent } from './admin/admin.component';
+import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { AdminComponent } from './admin/admin.component';
     LoginComponent,
     ShoppingComponent,
     PayingComponent,
-    AdminComponent
+    AdminComponent,
+    ResetpasswordComponent
   ],
   imports: [
     BrowserModule,

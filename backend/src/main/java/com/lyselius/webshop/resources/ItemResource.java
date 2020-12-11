@@ -22,17 +22,6 @@ public class ItemResource {
     @Autowired
     ItemRepository itemRepository;
 
-    /*@GetMapping(value = "/testitem")
-    public ResponseEntity<Item> testItem()
-    {
-        Item newItem = new Item();
-        newItem.setBaskets(null);
-        newItem.setItemID(2);
-        newItem.setName("Hejhej");
-        newItem.setDescription("En beskri");
-
-        return ResponseEntity.ok(newItem);
-    }*/
 
     @RequestMapping(value = "/item", method = RequestMethod.POST)
     public ResponseEntity<?> addItem(@RequestBody Map<String, String> item)

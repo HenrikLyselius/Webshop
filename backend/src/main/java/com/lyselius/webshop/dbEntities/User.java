@@ -20,6 +20,13 @@ public class User {
     private String password;
     private String email;
 
+
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade =  CascadeType.ALL,
+            mappedBy = "user",
+            optional = true)
+    private Password_reset_token password_reset_token;
+
     @JsonManagedReference
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Basket> baskets = new ArrayList<Basket>();
@@ -91,5 +98,13 @@ public class User {
 
     public void setBaskets(List<Basket> baskets) {
         this.baskets = baskets;
+    }
+
+    public Password_reset_token getPasswordResetToken() {
+        return password_reset_token;
+    }
+
+    public void setPasswordResetToken(Password_reset_token passwordResetToken) {
+        this.password_reset_token = passwordResetToken;
     }
 }

@@ -13,12 +13,12 @@ public class MailServiceImp{
     @Autowired
     JavaMailSender javaMailSender;
 
-    public void sendNewPasswordEmail(String address, String newPassword) {
+    public void sendNewPasswordEmail(String address, String URL) {
 
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo(address);
-        msg.setSubject("New Password");
-        msg.setText("Här är ditt nya lösenord till Amazing Webshop: " + newPassword);
+        msg.setSubject("Välj ett nytt lösenord.");
+        msg.setText("Klicka på länken för att välja ett nytt lösenord. " + URL);
 
         javaMailSender.send(msg);
 

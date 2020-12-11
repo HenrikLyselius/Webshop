@@ -139,8 +139,16 @@ export class RestapiService {
     return this.http.get("http://localhost:8080/order/getdetails/" + orderID, this.optionsJwt);
   }
 
-  public getNewPassword(username: String)
+  public getNewPassword(username: string)
   {
     return this.http.get("http://localhost:8080/user/forgotpassword/" + username, this.optionsLogin);
+  }
+
+  public updatePassword(username: string, newPassword: string, token: string)
+  {
+    let obj = {"username": username,
+               "newPassword": newPassword,
+               "token": token};
+    return this.http.put("http://localhost:8080/user/updatepassword", obj, this.optionsLogin);
   }
 }

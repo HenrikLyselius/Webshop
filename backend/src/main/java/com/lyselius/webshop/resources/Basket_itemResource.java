@@ -26,14 +26,6 @@ public class Basket_itemResource {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
-/*
-    @RequestMapping(value = "/addbasketitem", method = RequestMethod.POST)
-    public ResponseEntity<Basket_item> attBasketItem(@RequestBody Basket_item basket_item)
-    {
-        System.out.println(basket_item.getAmount());
-        return ResponseEntity.ok(basket_item);
-    }*/
-
 
 
 

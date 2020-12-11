@@ -140,11 +140,6 @@ export class ShoppingComponent implements OnInit {
     )
   }
 
-  /* logOut()
-  {
-    this.cookieService.set("username", "x");
-    this.restService.setUsername("x");
-    this.cookieService.set("jwt", '');
-    this.router.navigateByUrl('/login');
-  } */
+
+  
 }

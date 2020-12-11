@@ -143,7 +143,7 @@ export class LoginComponent implements OnInit {
   {
     this.restService.getNewPassword(this.usernameResetPassword).subscribe(
       (Response) => {this.handleGetNewPasswordResponse(Response)},
-      (Error) => {console.log(Error);}
+      (Error) => { alert("Något gick fel, prova igen."); }
     );
   }
 
@@ -151,7 +151,7 @@ export class LoginComponent implements OnInit {
   {
     if(response.status === 200)
     {
-      alert("Ett mejl med ett nytt lösenord har skickats till det konto som är kopplat till användarnamnet.");
+      alert("Ett mejl som beskriver hur du går tillväga för att uppdatera lösenordet har skickats till det konto som är kopplat till användarnamnet.");
     }
   }
 

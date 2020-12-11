@@ -43,8 +43,7 @@ public class Order_Resource {
         Order_ order_ = new Order_(basketID);
         order_repository.save(order_);
 
-        // Set basket inactive and create a new basket
-
+        // Set old basket inactive and create a new basket
         Optional<Basket> basketOp = basketRepository.findByBasketID(basketID);
         basketOp.get().setActive(false);
         basketRepository.save(basketOp.get());
@@ -56,22 +55,6 @@ public class Order_Resource {
         return ResponseEntity.ok(order_);
     }
 
-
-
-
-
-    /*@GetMapping(value = "/orders/notexpediated")
-    public ResponseEntity<List<Order_>> getNotExpediatedOrders()
-    {
-        Optional<List<Order_>> ordersOp = order_repository.findAllByExpediated(false);
-
-        if(ordersOp.isPresent())
-        {
-            return ResponseEntity.ok(ordersOp.get());
-        }
-
-        return ResponseEntity.ok(new ArrayList<>());
-    }*/
 
     @GetMapping(value = "/orders/notexpediated")
     public ResponseEntity<JSONObject> getNotExpediatedOrders()

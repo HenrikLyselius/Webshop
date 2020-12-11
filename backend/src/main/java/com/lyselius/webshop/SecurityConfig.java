@@ -3,17 +3,21 @@ package com.lyselius.webshop;
 import com.lyselius.webshop.filters.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.parameters.P;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
+@Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -35,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("/authenticate/**", "/hello/**", "/customer", "/user", "/user/forgotpassword/**").permitAll()
+                    .antMatchers("/authenticate/**", "/hello/**", "/customer", "/user", "/user/forgotpassword/**", "/user/updatepassword").permitAll()
                     .antMatchers("/admintest", "/item", "/order/expediate/**", "/orders/**").hasRole("ADMIN")
                     .antMatchers("/usertest", "/order/**").hasRole("CUSTOMER")
                     .anyRequest().authenticated()
@@ -44,13 +48,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
-
-
-        /*http.authorizeRequests()
-                .antMatchers("/admintest/**").hasRole("ADMIN")
-                .antMatchers("/usertest").hasAnyRole("ADMIN", "USER")
-                .antMatchers("/").permitAll()
-                .and().formLogin();*/
     }
 
     @Override
@@ -61,5 +58,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public PasswordEncoder getPasswordEncoder() { return NoOpPasswordEncoder.getInstance(); }
+    public PasswordEncoder getPasswordEncoder()
+    {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder;
+        //return NoOpPasswordEncoder.getInstance();
+    }
 }
