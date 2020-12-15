@@ -1,13 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
-import { catchError } from 'rxjs/operators'
-import { throwError } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RestapiService {
+
+  backendURL: string = "80.216.204.53:8090";
+  //backendURL: string = "localhost:8090";
+
 
   optionsLogin : any = {
     headers: new HttpHeaders({
@@ -41,18 +43,19 @@ export class RestapiService {
     this.username = username;
   }
 
+  
+
   public login(username:string, password:string)
   {
     this.cookieService.set("username", username);
     this.username = username;
-    console.log(username + " " + password);
     let object = {"username": username, "password": password};
-    return this.http.post<any>("http://localhost:8080/authenticate", object, this.optionsLogin)
+    return this.http.post<any>("http://" + this.backendURL +"/authenticate", object, this.optionsLogin)
   }
 
   public jwtTest()
   {
-    return this.http.get("http://localhost:8080/admintest", this.optionsJwt);
+    return this.http.get("http://" + this.backendURL + "/admintest", this.optionsJwt);
   }
 
   public setJwt(jwt:string)
@@ -72,7 +75,7 @@ export class RestapiService {
   public searchItems(search:string)
   {
     console.log(this.optionsJwt);
-    return this.http.get("http://localhost:8080/item/" + search, this.optionsJwt);
+    return this.http.get("http://" + this.backendURL + "/item/" + search, this.optionsJwt);
   }
 
 
@@ -83,24 +86,24 @@ export class RestapiService {
                "description": description,
                "price": price};
 
-    return this.http.post("http://localhost:8080/item/", obj, this.optionsJwt);
+    return this.http.post("http://" + this.backendURL +"/item/", obj, this.optionsJwt);
   }
 
   public getBasket()
   {
-    return this.http.get("http://localhost:8080/basket/" + this.username, this.optionsJwt);
+    return this.http.get("http://" + this.backendURL + "/basket/" + this.username, this.optionsJwt);
   }
 
 
   public getBasketItems(basketID: string)
   {
-    return this.http.get("http://localhost:8080/basketitems/" + basketID, this.optionsJwt);
+    return this.http.get("http://" + this.backendURL + "/basketitems/" + basketID, this.optionsJwt);
   }
 
   public addItemToBasket(itemID:number, basketID: number, change: number)
   {
     let obj = {};
-    return this.http.put("http://localhost:8080/basket/additem/" + basketID + "/" + itemID + "/" + change, obj, this.optionsJwt);
+    return this.http.put("http://" + this.backendURL + "/basket/additem/" + basketID + "/" + itemID + "/" + change, obj, this.optionsJwt);
   }
 
   
@@ -108,40 +111,40 @@ export class RestapiService {
   public makeOrder(basketID: number)
   {
     let obj = {};
-    return this.http.post("http://localhost:8080/order/" + basketID, obj, this.optionsJwt);
+    return this.http.post("http://" + this.backendURL + "/order/" + basketID, obj, this.optionsJwt);
   }
 
   public getOrdersNotExpediated()
   {
-    return this.http.get("http://localhost:8080/orders/notexpediated", this.optionsJwt);
+    return this.http.get("http://" + this.backendURL + "/orders/notexpediated", this.optionsJwt);
   }
 
   public expediateOrder(orderID: number)
   {
     let obj ={};
-    return this.http.put("http://localhost:8080/order/expediate/" + orderID, obj, this.optionsJwt);
+    return this.http.put("http://" + this.backendURL + "/order/expediate/" + orderID, obj, this.optionsJwt);
   }
 
   public createUser(username: string, password: string, email: string)
   {
     let object = {"username": username, "password": password, "email": email};
-    return this.http.post<any>("http://localhost:8080/user", object, this.optionsLogin);
+    return this.http.post<any>("http://" + this.backendURL + "/user", object, this.optionsLogin);
   }
 
 
   public isUserAdmin()
   {
-    return this.http.get("http://localhost:8080/isadmin/" + this.username, this.optionsJwt)
+    return this.http.get("http://" + this.backendURL + "/isadmin/" + this.username, this.optionsJwt)
   }
 
   public getOrderDetails(orderID: string)
   {
-    return this.http.get("http://localhost:8080/order/getdetails/" + orderID, this.optionsJwt);
+    return this.http.get("http://" + this.backendURL + "/order/getdetails/" + orderID, this.optionsJwt);
   }
 
   public getNewPassword(username: string)
   {
-    return this.http.get("http://localhost:8080/user/forgotpassword/" + username, this.optionsLogin);
+    return this.http.get("http://" + this.backendURL + "/user/forgotpassword/" + username, this.optionsLogin);
   }
 
   public updatePassword(username: string, newPassword: string, token: string)
@@ -149,6 +152,6 @@ export class RestapiService {
     let obj = {"username": username,
                "newPassword": newPassword,
                "token": token};
-    return this.http.put("http://localhost:8080/user/updatepassword", obj, this.optionsLogin);
+    return this.http.put("http://" + this.backendURL + "/user/updatepassword", obj, this.optionsLogin);
   }
 }

@@ -37,7 +37,6 @@ export class LoginComponent implements OnInit {
     this.restService.login(this.username, this.password).subscribe(
       (Response) => {this.handleLoginResponse(Response)},
       (Error) => {this.handleLoginError(Error);}
-
     );
   }
 
@@ -47,27 +46,14 @@ export class LoginComponent implements OnInit {
      {
        this.restService.setJwt(response.body.jwt);
        this.cookieService.set("loggedIn", "true");
-
-       this.restService.jwtTest().subscribe(
-         (Response) => { this.jwtTest(Response);}
-       );
-
-        this.router.navigateByUrl('/shopping');
-        
-
-     }
-     else if(response.status === 403)
-     {
-       alert("Användarnamnet eller lösenordet är fel.");
-     }
-
-     
+       this.router.navigateByUrl('/shopping');
+     }     
   }
 
-  handleLoginError(response: any)
+  handleLoginError(error: any)
   {
-    console.log(response);
-    alert("Användarnamnet eller lösenordet är fel.");
+    if(error.status === 403) { alert("Användarnamnet eller lösenordet är fel."); }
+    else { alert("Något gick fel, försök igen senare."); }
   }
 
   createNewUser()
@@ -78,12 +64,16 @@ export class LoginComponent implements OnInit {
     );
   }
 
+  createUserResponse(response: any)
+  {
+    if(response.status === 201) { alert("En ny användare skapades."); }
+  }
+
+
   handleSignUpError(error: any)
   {
-    if(error.status === 409)
-    {
-      alert("Användarnamnet är redan taget.");
-    }
+    if(error.status === 409) { alert("Användarnamnet är redan taget."); }
+    else { alert("Något gick fel, försök igen senare."); }
   }
 
   createAccount()
@@ -149,10 +139,7 @@ export class LoginComponent implements OnInit {
   }
 
 
-  createUserResponse(response: any)
-  {
-    if(response.status === 201) { alert("En ny användare skapades."); }
-  }
+  
 
   jwtTest(response:any)
   {

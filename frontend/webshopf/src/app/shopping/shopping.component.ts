@@ -12,25 +12,19 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class ShoppingComponent implements OnInit {
 
-
   
   @Input('search')search: string;
-
-  
   itemList: Array<Item>;
   basket: any;
   navigationSubscription;
+
 
   constructor(private restService:RestapiService, private router: Router, private cookieService: CookieService) 
   {
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
       // If it is a NavigationEnd event re-initalise the component
-      if (e instanceof NavigationEnd) {
-        this.initialiseInvites();
-      }
+      if (e instanceof NavigationEnd) { this.initialiseInvites(); }
     });
-    
-    
     this.getBasket();
   }
 
@@ -54,54 +48,22 @@ export class ShoppingComponent implements OnInit {
 
   searchItems()
   {
-    this.restService.jwtTest().subscribe(
-      (Response) => { console.log(Response); }
-    );
-
     this.restService.searchItems(this.search).subscribe(
       (Response) => { this.handleSearchResponse(Response); },
       (Error) => { this.handleErrorResponse(Error); 
-        console.log("Omrouting.");
         this.router.navigateByUrl('/login');}
     );
   }
 
 
   handleSearchResponse(response: any)
-  { console.log(response.body);
+  { 
     this.itemList = JSON.parse(response.body);
-    console.log(this.itemList);
-    //this.generateHtmlList();
   }
-
-  generateHtmlList()
-  {
-    document.getElementById('searchResults').innerHTML = '';
-
-    let ul = document.createElement('ul');
-    
-
-    document.getElementById('searchResults').appendChild(ul);
-    
-      for(let i = 0; i < this.itemList.length; i++)
-      {
-        let li = document.createElement('li');
-        li.innerHTML = "item: " + this.itemList[i].name + "     description: " + this.itemList[i].description;
-        ul.appendChild(li);
-      }
-    }
-  
-
-/* 
-
-    clearlist (){ 
-      let elem = document.getElementById('ul');
-      elem.parentNode.removeChild(elem);
-    }  */
 
   handleErrorResponse(error: any)
   {
-
+    alert("Någonting gick fel.");
   }
 
   getBasket()
@@ -115,10 +77,7 @@ export class ShoppingComponent implements OnInit {
 
   handleGetBasket(response: any)
   {
-    console.log(response.body);
     this.basket = JSON.parse(response.body);
-    console.log("Basket: " + this.basket);
-    console.log(this.basket.basketID);
   }
 
 
@@ -131,7 +90,6 @@ export class ShoppingComponent implements OnInit {
 
     this.restService.addItemToBasket(item.itemID, this.basket.basketID, change).subscribe(
       (Response) => { 
-        console.log(Response);
         alert(change + " " + item.name + " lades i varukorgen.");
       },
       (Error) => { this.handleErrorResponse(Error); }

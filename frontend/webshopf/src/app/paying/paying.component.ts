@@ -35,9 +35,6 @@ export class PayingComponent implements OnInit {
       (response: any) => { 
         this.basket = JSON.parse(response.body); 
         this.getBasketItems(this.basket.basketID);
-
-        console.log(this.basket.items);
-
       },
       (Error) => { this.handleError(Error); }
       );
@@ -49,7 +46,6 @@ export class PayingComponent implements OnInit {
 
     this.restService.getBasketItems(basketID).subscribe(
     (response: any) => { this.basketItems = JSON.parse(response.body); 
-      console.log(this.basketItems);
       this.updatePrice();
     },
     (Error) => { this.handleError(Error); }
@@ -77,8 +73,6 @@ export class PayingComponent implements OnInit {
 
   addToBasket(item: Item, change: number)
   {
-        console.log("I addToBasket: ItemID " + item.itemID + " basketID: " + this.basket.basketID);
-
     this.restService.addItemToBasket(item.itemID, this.basket.basketID, change).subscribe(
       (Response) => { this.handleAddItemResponse(Response); },
       (Error) => { 

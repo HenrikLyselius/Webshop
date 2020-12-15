@@ -9,9 +9,6 @@ import { RestapiService } from '../restapi.service';
 })
 export class ResetpasswordComponent implements OnInit {
 
-
-  
-  
   token: string = "";
   @Input('newPassword') newPassword: string;
   @Input('newPassword2') newPassword2: string;
@@ -19,6 +16,7 @@ export class ResetpasswordComponent implements OnInit {
 
   constructor(private restService:RestapiService, private router: Router, private route: ActivatedRoute) { }
 
+ 
   ngOnInit(): void {
     this.token = this.route.snapshot.paramMap.get("token");
     this.username = this.route.snapshot.paramMap.get("username");

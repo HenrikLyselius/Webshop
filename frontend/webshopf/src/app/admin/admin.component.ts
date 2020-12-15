@@ -39,7 +39,6 @@ export class AdminComponent implements OnInit {
   {
     let obj = JSON.parse(response.body);
     this.orderList = obj.orderList;
-    console.log(this.orderList);
   }
 
 
@@ -67,19 +66,6 @@ export class AdminComponent implements OnInit {
       document.getElementById("details" + orderID).innerHTML = "Visa detaljer";
     }
   }
-
-
- /*  showOrderDetails(orderID: string)
-  {
-    let orderInfo = this.restService.getOrderDetails(orderID).subscribe(
-      (Response) => { this.handleOrderDetailsResponse(orderID, (Response)); },
-      (Error) => {console.log(Error);}
-    )
-  } */
-
-
-
- 
 
 
   addItem()

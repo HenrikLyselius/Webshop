@@ -24,7 +24,7 @@ import java.util.Optional;
 import java.util.Random;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserResource {
 
 
@@ -186,7 +186,7 @@ public class UserResource {
 
     public static String getResetPasswordURL(HttpServletRequest request, String token, String username)
     {
-        return "http://localhost:4200/resetpassword/" + token + "/" + username;
-        //return "http://80.216.204.53:4200/resetpassword/" + token + "/" + username;
+        //return "http://localhost:4200/resetpassword/" + token + "/" + username;
+        return "http://80.216.204.53:4200/resetpassword/" + token + "/" + username;
     }
 }

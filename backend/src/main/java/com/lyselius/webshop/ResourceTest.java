@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin
 public class ResourceTest {
 
 
@@ -71,30 +71,8 @@ public class ResourceTest {
         Optional<User> user = userRepository.findByUsername("admin2");
         if(user.isPresent())
         {
-            //System.out.println(user.get().getBaskets().get(0).isActive());
             System.out.println(user.get().getRoles().get(0).getDescription());
         }
-    }
-
-
-
-    @RequestMapping(value = "/customer", method = RequestMethod.POST)
-    public ResponseEntity<?> createUser(@RequestBody User user)
-    {
-        // Check if username already exists
-        Optional<User> earlierUser = userRepository.findByUsername(user.getUsername());
-        if(earlierUser.isPresent())
-        { return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(user); }
-
-        // Create user and impart the role costumer
-        Role role = roleRepository.findByRole("ROLE_CUSTOMER").get();
-        user.addRole(role);
-        userRepository.save(user);
-        long userID = userRepository.findByUsername(user.getUsername()).get().getuserID();
-        /*System.out.println(userID);
-        user_roleRepository.save(new User_role(userID, "ROLE_CUSTOMER"));*/
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 
 
